@@ -1,30 +1,73 @@
-const gameModule = (function () {
-  const gameContainer = document.querySelector(".gameDisplay");
-  gameBoard = [];
+const playerManagement = (function (
+  playerOneName = "Player One",
+  PlayerTwoName = "Player Two"
+) {
+  const players = [
+    { name: playerOneName, mark: "X" },
+    { name: PlayerTwoName, mark: "O" },
+  ];
 
-  const CreatePlayer = (name, mark) => {
-    return { name, mark };
+  let activePlayer = players[0];
+
+  const switchPlayerTurn = () => {
+    activePlayer =
+      activePlayer.mark === "X"
+        ? (activePlayer = players[1])
+        : (activePlayer = players[0]);
   };
 
-  const createGameDisplay = () => {
-    for (let i = 0; i < 9; i++) {
-      const div = document.createElement("div");
-      div.classList.add("box");
-      div.textContent = gameBoard[i];
-      div.setAttribute("data-square", `${i}`);
-      div.addEventListener("click", () => {
-        if (div.textContent === "") {
-          div.textContent = "content has been added";
-        } else return;
-      });
-      gameContainer.appendChild(div);
+  const getActivePlayerName = () => activePlayer.name;
+
+  const getActivePlayerMark = () => activePlayer.mark;
+
+  return { switchPlayerTurn, getActivePlayerName, getActivePlayerMark };
+})();
+
+const GameBoard = (function () {
+  const rows = 3;
+  const columns = 3;
+  const board = [];
+
+  for (let i = 0; i < rows; i++) {
+    board[i] = [];
+    for (let j = 0; j < columns; j++) {
+      board[i].push([]);
+    }
+  }
+
+  const getBoard = () => board;
+
+  const addMark = (row, column) => {
+    const player = playerManagement;
+    const position = board[row][column];
+
+    if (!position === 0) return;
+
+    const mark = player.getActivePlayerMark();
+
+    position.push(mark);
+  };
+
+  const printBoard = () => {
+    for (let i = 0; i < board.length; i++) {
+      for (let j = 0; j < board[i].length; j++) {}
     }
   };
 
-  return { createGameDisplay, CreatePlayer };
+  return { getBoard, addMark, printBoard };
 })();
 
-gameModule.createGameDisplay();
-const player1 = gameModule.CreatePlayer("sunshine", "x");
+const GameControls = (function () {
+  const board = GameBoard;
+  const player = playerManagement;
+  const playRound = (row, column) => {
+    console.log(`It is currently ${player.getActivePlayerName()}'s turn`);
 
-console.log(player1);
+    board.addMark(row, column);
+    board.printBoard();
+    player.switchPlayerTurn();
+  };
+  return { playRound };
+})();
+
+GameControls.playRound(1, 0);
