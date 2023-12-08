@@ -24,34 +24,23 @@ const playerManagement = (function (
 })();
 
 const GameBoard = (function () {
-  const rows = 3;
-  const columns = 3;
-  const board = [];
-
-  for (let i = 0; i < rows; i++) {
-    board[i] = [];
-    for (let j = 0; j < columns; j++) {
-      board[i].push([]);
-    }
-  }
+  const board = ["", "", "", "", "", "", "", "", ""];
 
   const getBoard = () => board;
 
-  const addMark = (row, column) => {
+  const addMark = (number) => {
     const player = playerManagement;
-    const position = board[row][column];
+    const position = board[number];
 
-    if (!position === 0) return;
+    if (position != "") return;
 
     const mark = player.getActivePlayerMark();
 
-    position.push(mark);
+    console.log(`Mark "${mark}" placed at position ${position}`);
   };
 
   const printBoard = () => {
-    for (let i = 0; i < board.length; i++) {
-      for (let j = 0; j < board[i].length; j++) {}
-    }
+    console.log(board);
   };
 
   return { getBoard, addMark, printBoard };
@@ -59,15 +48,27 @@ const GameBoard = (function () {
 
 const GameControls = (function () {
   const board = GameBoard;
+  boardCells = board.getBoard();
   const player = playerManagement;
-  const playRound = (row, column) => {
+
+  const checkWinner = () => {
+    const winningConditions = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [6, 7, 8],
+      [0, 4, 8],
+      [6, 4, 2],
+    ];
+  };
+  const playRound = (number) => {
     console.log(`It is currently ${player.getActivePlayerName()}'s turn`);
 
-    board.addMark(row, column);
+    board.addMark(number);
     board.printBoard();
     player.switchPlayerTurn();
   };
-  return { playRound };
+  return { checkWinner, playRound };
 })();
-
-GameControls.playRound(1, 0);
