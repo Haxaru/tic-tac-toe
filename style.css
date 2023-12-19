@@ -1,0 +1,9 @@
+.game-board-disp {
+  display: grid;
+  height: 175px;
+  width: 175px;
+  place-items: center;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  cursor: pointer;
+}
