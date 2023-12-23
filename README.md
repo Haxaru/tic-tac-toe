@@ -23,3 +23,6 @@ This game is a straightforward implementation of the classic Tic-Tac-Toe. Player
 // Example: Play a round by marking position 4
 GameController.playRound(4);
 ```
+
+### Game Link
+You can play the game here: [Play Tic-Tac-Toe](https://haxaru.github.io/tic-tac-toe/)
