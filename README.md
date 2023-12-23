@@ -21,5 +21,5 @@ This game is a straightforward implementation of the classic Tic-Tac-Toe. Player
 
 ```javascript
 // Example: Play a round by marking position 4
-GameControls.playRound(4);
+GameController.playRound(4);
 ```

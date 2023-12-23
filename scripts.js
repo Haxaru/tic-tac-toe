@@ -57,7 +57,28 @@ const GameBoardModule = (function (player) {
   return { getBoard, addMark, filledCells, resetBoard };
 })(PlayerManager);
 
-const GameController = (function (board, player) {
+const DomManager = (function (board) {
+  const messageDisplay = document.querySelector(".message-display");
+  const gameBoardDisplay = document.querySelector(".game-board-display");
+
+  const updateScreen = () => {
+    gameBoardDisplay.textContent = "";
+
+    for (let i = 0; i < 9; i++) {
+      const div = document.createElement("div");
+
+      div.classList.add("box");
+
+      div.textContent = board.getBoard()[i];
+
+      gameBoardDisplay.appendChild(div);
+    }
+  };
+
+  return { messageDisplay, gameBoardDisplay, updateScreen };
+})(GameBoardModule);
+
+const GameController = (function (player, board, dom) {
   const checkWinner = () => {
     const boardArray = board.getBoard();
     const winningConditions = [
@@ -88,33 +109,31 @@ const GameController = (function (board, player) {
   const playRound = (number) => {
     if (board.getBoard()[number] !== "") return;
 
-    console.log(`It is currently ${player.getActivePlayerName()}'s turn`);
-
     board.addMark(number);
 
-    console.log(
-      `Mark ${player.getActivePlayerMark()} has been placed at position ${number}`
-    );
-
-    console.log(`The board: ${board.getBoard()}`);
-
     if (checkWinner() === true) {
-      console.log(
-        `We have a winner! ${player.getActivePlayerName()} wins! The game will now reset!`
-      );
+      dom.messageDisplay.textContent = `We have a winner! ${player.getActivePlayerName()} wins! The game will now reset!`;
+
+      dom.updateScreen();
       board.resetBoard();
       return;
     }
 
     if (checkWinner() === false && board.filledCells() >= 9) {
-      console.log(
-        "The game ended in a tie! Better luck next time! The game will now reset!"
-      );
+      dom.messageDisplay.textContent =
+        "The game ended in a tie! Better luck next time! The game will now reset!";
+
+      dom.updateScreen();
       board.resetBoard();
       return;
     }
 
     player.switchPlayerTurn();
+
+    dom.messageDisplay.textContent = `It is currently ${player.getActivePlayerName()}'s turn`;
+
+    dom.updateScreen();
   };
+
   return { checkWinner, playRound };
-})(GameBoardModule, PlayerManager);
+})(PlayerManager, GameBoardModule, DomManager);
