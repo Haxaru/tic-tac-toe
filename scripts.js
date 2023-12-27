@@ -7,6 +7,24 @@ const PlayerManager = (function (
     { name: playerTwoName, mark: "O" },
   ];
 
+  const setPlayerNames = () => {
+    const playerOneNameInput = document.querySelector("#player-1").value;
+    const playerTwoNameInput = document.querySelector("#player-2").value;
+
+    playerOneNameInput === ""
+      ? (players[0].name = playerOneName)
+      : (players[0].name = playerOneNameInput);
+
+    playerTwoNameInput === ""
+      ? (players[1].name = playerTwoName)
+      : (players[1].name = playerTwoNameInput);
+  };
+
+  const submitButton = document.querySelector(".submit");
+  submitButton.addEventListener("click", () => {
+    setPlayerNames();
+  });
+
   let activePlayer = players[0];
 
   const switchPlayerTurn = () => {
@@ -51,9 +69,8 @@ const GameBoardModule = (function (player) {
 
   const resetBoard = () => {
     board = ["", "", "", "", "", "", "", "", ""];
-    player.setActivePlayer[0];
+    player.setActivePlayer(0);
   };
-
   return { getBoard, addMark, filledCells, resetBoard };
 })(PlayerManager);
 
@@ -66,7 +83,6 @@ const DomManager = (function (board) {
 
     for (let i = 0; i < 9; i++) {
       const div = document.createElement("div");
-
       div.classList.add("box");
 
       div.textContent = board.getBoard()[i];
@@ -74,6 +90,15 @@ const DomManager = (function (board) {
       gameBoardDisplay.appendChild(div);
     }
   };
+
+  updateScreen();
+
+  const resetButton = document.querySelector(".reset");
+  resetButton.addEventListener("click", () => {
+    board.resetBoard();
+    updateScreen();
+    messageDisplay.textContent = "";
+  });
 
   return { messageDisplay, gameBoardDisplay, updateScreen };
 })(GameBoardModule);
@@ -87,7 +112,7 @@ const GameController = (function (player, board, dom) {
       [6, 7, 8],
       [0, 3, 6],
       [1, 4, 7],
-      [6, 7, 8],
+      [2, 5, 8],
       [0, 4, 8],
       [6, 4, 2],
     ];
@@ -134,6 +159,17 @@ const GameController = (function (player, board, dom) {
 
     dom.updateScreen();
   };
+
+  const handleClick = () => {
+    const cells = document.querySelectorAll(".box");
+    cells.forEach((element, index) => {
+      element.addEventListener("click", () => {
+        playRound(index);
+      });
+    });
+  };
+
+  dom.gameBoardDisplay.addEventListener("click", () => handleClick());
 
   return { checkWinner, playRound };
 })(PlayerManager, GameBoardModule, DomManager);

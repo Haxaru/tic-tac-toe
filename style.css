@@ -1,9 +1,164 @@
+html {
+  height: 100%;
+  background: linear-gradient(to bottom right, #432371, #faae7b);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: #f0e5ff;
+}
+
+dialog {
+  position: absolute;
+  top: 33%;
+  width: 400px;
+  height: 400px;
+  border: 3px solid #2510444d;
+  border-radius: 8px;
+  background-color: #2510444d;
+  font-size: 1.125rem;
+  color: #f0e5ff;
+  backdrop-filter: blur(30px);
+}
+
+dialog p {
+  text-transform: capitalize;
+  letter-spacing: 0.0688rem;
+  letter-spacing: 1.3px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 40px;
+}
+
+form p {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+form label {
+  letter-spacing: 1.2px;
+}
+
+form input {
+  padding: 5px;
+  border-style: none;
+  border-radius: 3px;
+  background-color: #25104480;
+  font-size: 1.125rem;
+  color: #f0e5ff;
+  transition: all 0.3s ease-in-out;
+  letter-spacing: 0.0625rem;
+}
+
+form input:hover {
+  scale: 1.02;
+}
+
+form > button {
+  align-self: center;
+  width: 50%;
+  margin-top: 20px;
+  padding: 8px;
+  border-style: none;
+  border-radius: 3px;
+  background-color: #25104480;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #f0e5ff;
+  transition: all 0.3s ease-in-out;
+  letter-spacing: 0.1rem;
+}
+
+form > button:hover,
+.reset:hover {
+  background-color: #251044b3;
+  letter-spacing: 0.2rem;
+  scale: 1.04;
+}
+
+.title {
+  text-shadow: 0 0 3px #caa5ff;
+  text-transform: capitalize;
+  letter-spacing: 1.1px;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-rules,
+.message-display {
+  width: 75ch;
+  margin-bottom: 35px;
+  font-size: 1.3125rem;
+  text-align: center;
+  line-height: 2.7rem;
+}
+
+.message-display {
+  height: 30px;
+}
+
 .game-board-display {
   display: grid;
-  height: 175px;
-  width: 175px;
-  place-items: center;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
+  width: 400px;
+  height: 400px;
   cursor: pointer;
+  place-items: center;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 2rem;
+  font-weight: 700;
+  text-shadow: 0 0 12px #caa5ff;
+  color: #f0e5ff;
+  user-select: none;
+}
+
+.box:nth-child(-n + 6) {
+  border-bottom: 5px solid #432371cc;
+}
+
+.box:nth-child(3n + 2) {
+  border-left: 5px solid #432371cc;
+  border-right: 5px solid #432371cc;
+}
+
+.box:hover {
+  background-color: #5c416c4d;
+}
+
+.box:active {
+  font-size: 2.2rem;
+}
+
+.reset {
+  width: 200px;
+  margin-top: 40px;
+  margin-top: 20px;
+  padding: 8px;
+  border-style: none;
+  border-radius: 3px;
+  background-color: #25104480;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #f0e5ff;
+  transition: all 0.3s ease-in-out;
+  letter-spacing: 0.1rem;
+}
+
+.reset:active {
+  transform: translateY(-1px);
 }
