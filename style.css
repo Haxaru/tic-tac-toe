@@ -8,9 +8,9 @@ html {
 
 dialog {
   position: absolute;
-  top: 33%;
-  width: 400px;
-  height: 400px;
+  top: 40%;
+  width: 325px;
+  height: 325px;
   border: 3px solid #2510444d;
   border-radius: 8px;
   background-color: #2510444d;
@@ -21,15 +21,14 @@ dialog {
 
 dialog p {
   text-transform: capitalize;
-  letter-spacing: 0.0688rem;
-  letter-spacing: 1.3px;
+  letter-spacing: 0.0813rem;
 }
 
 form {
   display: flex;
   flex-direction: column;
   text-align: center;
-  gap: 40px;
+  gap: 25px;
 }
 
 form p {
@@ -59,7 +58,6 @@ form input:hover {
 form > button {
   align-self: center;
   width: 50%;
-  margin-top: 20px;
   padding: 8px;
   border-style: none;
   border-radius: 3px;
@@ -94,7 +92,7 @@ form > button:hover,
 .game-rules,
 .message-display {
   width: 75ch;
-  margin-bottom: 35px;
+  margin-bottom: 20px;
   font-size: 1.3125rem;
   text-align: center;
   line-height: 2.7rem;
@@ -108,8 +106,8 @@ form > button:hover,
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  width: 400px;
-  height: 400px;
+  width: 325px;
+  height: 325px;
   cursor: pointer;
   place-items: center;
 }
@@ -146,8 +144,7 @@ form > button:hover,
 
 .reset {
   width: 200px;
-  margin-top: 40px;
-  margin-top: 20px;
+  margin-top: 50px;
   padding: 8px;
   border-style: none;
   border-radius: 3px;
