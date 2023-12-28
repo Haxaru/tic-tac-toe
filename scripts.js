@@ -8,8 +8,8 @@ const PlayerManager = (function (
   ];
 
   const setPlayerNames = () => {
-    const playerOneNameInput = document.querySelector("#player-1").value;
-    const playerTwoNameInput = document.querySelector("#player-2").value;
+    const playerOneNameInput = document.getElementById("player-1").value;
+    const playerTwoNameInput = document.getElementById("player-2").value;
 
     playerOneNameInput === ""
       ? (players[0].name = playerOneName)
@@ -56,7 +56,17 @@ const GameBoardModule = (function (player) {
   const getBoard = () => board;
 
   const addMark = (number) => {
-    if (board[number] !== "") return;
+    number = Number(number);
+
+    if (
+      number > 8 ||
+      number < 0 ||
+      isNaN(number) ||
+      !Number.isInteger(number) ||
+      board[number] !== ""
+    )
+      return;
+    //Validate number selection
 
     board[number] = player.getActivePlayerMark();
   };
@@ -80,12 +90,13 @@ const DomManager = (function (board) {
 
   const updateScreen = () => {
     gameBoardDisplay.textContent = "";
+    const boardArray = board.getBoard();
 
     for (let i = 0; i < 9; i++) {
       const div = document.createElement("div");
       div.classList.add("box");
 
-      div.textContent = board.getBoard()[i];
+      div.textContent = boardArray[i];
 
       gameBoardDisplay.appendChild(div);
     }
@@ -132,12 +143,20 @@ const GameController = (function (player, board, dom) {
   };
 
   const playRound = (number) => {
-    if (board.getBoard()[number] !== "") return;
+    const playerName = player.getActivePlayerName();
+    checkWinner();
+
+    if (
+      board.getBoard()[number] !== "" ||
+      isNaN(number) ||
+      !Number.isInteger(number)
+    )
+      return;
 
     board.addMark(number);
 
     if (checkWinner() === true) {
-      dom.messageDisplay.textContent = `We have a winner! ${player.getActivePlayerName()} wins! The game will now reset!`;
+      dom.messageDisplay.textContent = `We have a winner! ${playerName} wins! The game will now reset!`;
 
       dom.updateScreen();
       board.resetBoard();
@@ -155,7 +174,7 @@ const GameController = (function (player, board, dom) {
 
     player.switchPlayerTurn();
 
-    dom.messageDisplay.textContent = `It is currently ${player.getActivePlayerName()}'s turn`;
+    dom.messageDisplay.textContent = `It is currently ${playerName}'s turn`;
 
     dom.updateScreen();
   };
@@ -169,7 +188,9 @@ const GameController = (function (player, board, dom) {
     });
   };
 
-  dom.gameBoardDisplay.addEventListener("click", () => handleClick());
+  window.addEventListener("click", () => {
+    handleClick();
+  });
 
   return { checkWinner, playRound };
 })(PlayerManager, GameBoardModule, DomManager);
